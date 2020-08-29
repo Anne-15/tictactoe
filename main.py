@@ -21,16 +21,32 @@ def display_board():
 
 display_board()
 
-# handle a single turn per player
-def handle_turn(player):
+# play game function
+def play_game():
+
+    # handle a single turn per player
+    def handle_turn(player):
+
+        print( player + "'s turn")
+
         position = input("Choose a number from 1-9: ")
-        position = int(position) - 1
+
+        valid = False
+        while not valid:
+            while position not in ["1","2","3","4","5","6","7","8","9"]:
+                position = input("Choose a number from 1-9: ")
+
+            position = int(position) - 1
+
+            if board[position] == "_":
+                valid = True
+            else:
+                print("You can't go there, sorry try again!")
 
         board[position] = player
         display_board()
 
-# play game function
-def play_game():
+
     # take turns for players to play
     def flip_player():
         global current_player
@@ -126,6 +142,9 @@ def play_game():
 
     # check whether there is a tie
     def check_if_tie():
+        global game_still_on
+        if "_" not in board:
+            game_still_on = False
         return
 
     # while the game is still goin
